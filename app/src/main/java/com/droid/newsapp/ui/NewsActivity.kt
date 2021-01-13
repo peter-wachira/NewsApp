@@ -1,7 +1,8 @@
-package com.droid.newsapp
+package com.droid.newsapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.droid.newsapp.R
 
 class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
