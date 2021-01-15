@@ -1,7 +1,7 @@
-package com.droid.newsapp.ui
+package com.droid.newsapp.ui.models
 
 
-import com.google.gson.annotations.SerializedName
+import com.droid.newsapp.ui.models.Article
 
 data class NewsResponse(
     val articles: List<Article>,
