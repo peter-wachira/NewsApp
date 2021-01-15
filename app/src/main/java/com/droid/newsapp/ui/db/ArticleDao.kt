@@ -2,8 +2,7 @@ package com.droid.newsapp.ui.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.droid.newsapp.ui.Article
-import retrofit2.http.DELETE
+import com.droid.newsapp.ui.models.Article
 
 @Dao
 interface ArticleDao {
