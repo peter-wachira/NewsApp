@@ -1,6 +1,6 @@
 package com.droid.newsapp.ui.api
 
-import com.droid.newsapp.ui.NewsResponse
+import com.droid.newsapp.ui.models.NewsResponse
 import com.droid.newsapp.ui.util.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
