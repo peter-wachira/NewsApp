@@ -1,4 +1,4 @@
-package com.droid.newsapp.ui
+package com.droid.newsapp.ui.models
 
 import com.google.gson.annotations.SerializedName
 
