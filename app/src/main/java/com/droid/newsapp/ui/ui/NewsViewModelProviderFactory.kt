@@ -8,7 +8,7 @@ class NewsViewModelProviderFactory(
         val newsRepository: NewsRepository
 ): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        TODO("Not yet implemented")
+        return NewsViewModel(newsRepository) as T
     }
 
 
