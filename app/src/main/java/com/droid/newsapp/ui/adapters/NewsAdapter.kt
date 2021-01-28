@@ -3,7 +3,6 @@ package com.droid.newsapp.ui.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -12,15 +11,13 @@ import com.droid.newsapp.R
 import com.droid.newsapp.ui.models.Article
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 
-class NewsAdapter(
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
-): RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>(){
+    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    inner class ArticleViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
-
-    private  val differCallback = object: DiffUtil.ItemCallback<Article>(){
+    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return  oldItem.url == newItem.url
+            return oldItem.url == newItem.url
         }
 
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -34,7 +31,8 @@ class NewsAdapter(
         return ArticleViewHolder(
                 LayoutInflater.from(parent.context).inflate(
                         R.layout.item_article_preview,
-                        parent
+                        parent,
+                        false
                 )
         )
     }
