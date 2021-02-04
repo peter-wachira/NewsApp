@@ -16,6 +16,8 @@ val newsRepository : NewsRepository
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
 
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var searchNewsPage = 1
 
     init {
         getBreakingNews("US")
@@ -28,7 +30,22 @@ val newsRepository : NewsRepository
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
 
+    fun searchNews(searcQuery: String )= viewModelScope.launch {
+        searchNews.postValue(  Resource.Loading())
+        val response = newsRepository.searchNews(searcQuery, searchNewsPage)
+        searchNews.postValue(handleSearchNewsResponse(response))
+    }
+
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
