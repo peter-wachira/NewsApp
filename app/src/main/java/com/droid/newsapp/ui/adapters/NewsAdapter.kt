@@ -41,26 +41,25 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         return differ.currentList.size
     }
 
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
             tvSource.text = article.source.name
-            tvTitle.text = article.description
+            tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
 
-            setOnItemClickListener {
+            setOnClickListener {
                 onItemClickListener?.let { it(article) }
             }
         }
     }
 
-    private  var onItemClickListener:((Article)->Unit)?= null
-
-    fun setOnItemClickListener(listener: (Article)-> Unit){
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
-
 
 }
