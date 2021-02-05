@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class NewsViewModel(
-val newsRepository : NewsRepository
+        val newsRepository: NewsRepository
 ) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -20,19 +20,18 @@ val newsRepository : NewsRepository
     var searchNewsPage = 1
 
     init {
-        getBreakingNews("US")
+        getBreakingNews("us")
     }
 
-    /*Method to notify fragments whenever Live Data is updates */
     fun getBreakingNews(countryCode: String) = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
 
-    fun searchNews(searcQuery: String )= viewModelScope.launch {
-        searchNews.postValue(  Resource.Loading())
-        val response = newsRepository.searchNews(searcQuery, searchNewsPage)
+    fun searchNews(searchQuery: String) = viewModelScope.launch {
+        searchNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(searchQuery, searchNewsPage)
         searchNews.postValue(handleSearchNewsResponse(response))
     }
 
@@ -54,3 +53,5 @@ val newsRepository : NewsRepository
         return Resource.Error(response.message())
     }
 }
+
+
