@@ -11,17 +11,14 @@ import com.droid.newsapp.ui.ui.NewsActivity
 import com.droid.newsapp.ui.ui.NewsViewModel
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
-class SavedNewsFragment  : Fragment(R.layout.fragment_saved_news){
+class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         viewModel = (activity as NewsActivity).viewModel
-
         setupRecyclerView()
 
         newsAdapter.setOnItemClickListener {
@@ -35,14 +32,11 @@ class SavedNewsFragment  : Fragment(R.layout.fragment_saved_news){
         }
     }
 
-
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-
         }
     }
-
 }

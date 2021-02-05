@@ -14,15 +14,15 @@ import com.droid.newsapp.ui.ui.NewsViewModel
 import com.droid.newsapp.ui.util.Resource
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 
-class BreakingNewsFragment  : Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     lateinit var viewModel: NewsViewModel
-
     lateinit var newsAdapter: NewsAdapter
+
+    val TAG = "BreakingNewsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //initialize view model
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
@@ -30,27 +30,24 @@ class BreakingNewsFragment  : Fragment(R.layout.fragment_breaking_news) {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-
             findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
                 bundle
             )
         }
 
-        //set up
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles.toList())
-
+                        newsAdapter.differ.submitList(newsResponse.articles)
                     }
                 }
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e("BreakingNewsFragment", "An error occured $message")
+                        Log.e(TAG, "An error occured: $message")
                     }
                 }
                 is Resource.Loading -> {
@@ -58,13 +55,11 @@ class BreakingNewsFragment  : Fragment(R.layout.fragment_breaking_news) {
                 }
             }
         })
-
     }
 
     private fun hideProgressBar() {
         paginationProgressBar.visibility = View.INVISIBLE
     }
-
 
     private fun showProgressBar() {
         paginationProgressBar.visibility = View.VISIBLE
@@ -75,8 +70,6 @@ class BreakingNewsFragment  : Fragment(R.layout.fragment_breaking_news) {
         rvBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
-
         }
     }
-
 }
