@@ -3,6 +3,7 @@ package com.droid.newsapp.ui.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.droid.newsapp.ui.models.Article
 import com.droid.newsapp.ui.models.NewsResponse
 import com.droid.newsapp.ui.repository.NewsRepository
 import com.droid.newsapp.ui.util.Resource
@@ -51,6 +52,17 @@ class NewsViewModel(
             }
         }
         return Resource.Error(response.message())
+    }
+
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticles(article)
+    }
+
+    fun getSavedNews() = newsRepository.getSavedNews()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticles(article)
     }
 }
 
